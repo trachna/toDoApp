@@ -5,6 +5,8 @@ import allReducers from './../../reducers';
 import TodoForm from './../TodoForm';
 
 var toDoList = createStore(allReducers);
+// var toDoList = new Array(3).fill(jest.fn());
+
 
 beforeEach(() => {
   render(<Provider store={toDoList}><TodoForm /></Provider>);
@@ -33,16 +35,18 @@ describe('check the working of the form', () => {
 
   test('renders add item button without crashing', () => {
     const addItemElement = screen.getByTestId("add-item-button");
-    // expect(addItemElement).toBeDisabled();
+    expect(addItemElement).toBeDisabled();
   });
 
-  // test('add button becomes active after typing', () => {
-  //   const inputBoxElement = screen.getByTestId("input-box");
-  //   if(inputBoxElement.value!=''){
-  //     const addItemElement = screen.getByTestId("add-item-button");
-  //     expect(addItemElement).toBeEnabled();
-  //   }
-  // })
+  test('add button is disabled when input value is empty', () => {
+    const inputBoxElement = screen.getByTestId("input-box");
+    if(inputBoxElement.value===''){
+      expect(screen.getByTestId("add-item-button")).toBeDisabled();
+    }
+    else{
+      expect(screen.getByTestId("add-item-button")).toBeEnabled();
+    }
+  })
 
   // test('input value becomes empty after clicking add button', () => {
   //   // const addItemElement = screen.getByTestId("add-item-button");
